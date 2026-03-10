@@ -10,14 +10,17 @@ from services.yt_service import get_thumbnail_info
 router = APIRouter(prefix="/thumbnail", tags=["Thumbnail"])
 
 @router.get("", response_model=ThumbnailResponse)
-async def get_thumbnail(url: str = Query(..., description="URL video YouTube")):
+async def get_thumbnail(
+    url: str = Query(..., description="URL video YouTube"),
+    cookies: str | None = Query(None, description="Path ke file cookies (opsional)")
+):
     """Mengambil metadata dan URL thumbnail dari URL YouTube."""
     video_id = extract_video_id(url)
     if not video_id:
         raise HTTPException(status_code=400, detail="URL YouTube tidak valid atau Video ID tidak ditemukan.")
 
     try:
-        info = await get_thumbnail_info(video_id)
+        info = await get_thumbnail_info(video_id, cookiefile=cookies)
         return {
             "status": "success",
             "metadata": info["metadata"],

@@ -9,9 +9,12 @@ class ThumbnailURLs(BaseModel):
 
 class VideoMetadata(BaseModel):
     """Skema untuk metadata dasar video YouTube."""
+    video_id: str
     title: str
     author: str
-    duration: int  # dalam detik
+    description: str | None = None
+    duration: int | None = 0  # dalam detik
+    view_count: int | None = 0
 
 class ThumbnailResponse(BaseModel):
     """Skema respon lengkap API."""
