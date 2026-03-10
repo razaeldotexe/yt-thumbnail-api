@@ -157,3 +157,7 @@ tmp/
 *.png
 PRD.md
 Prompt.md
+cookies.txt
+*.txt
+!requirements.txt
+downloads/
