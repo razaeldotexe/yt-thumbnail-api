@@ -1,85 +1,92 @@
-# YT Thumbnail Downloader API
+# YT Thumbnail Downloader API 🚀
 
-API production-ready untuk mengambil metadata dan mengunduh thumbnail dari YouTube menggunakan Python, FastAPI, dan `yt-dlp`.
+API berbasis FastAPI untuk mengambil metadata dan mengunduh thumbnail dari video YouTube menggunakan `yt-dlp`.
 
-## 🚀 Fitur Utama
+## ✨ Fitur
 
-- **Ekstraksi Metadata**: Judul video, nama uploader, dan durasi.
-- **Dukungan URL Luas**: Mendukung URL YouTube standar, Short (`youtu.be`), Shorts, YouTube Music, dan Mobile.
-- **Resolusi Beragam**: Menyediakan link thumbnail untuk resolusi Default, Medium, High, hingga Max Resolution.
-- **Direct Download**: Endpoint khusus untuk mengunduh file thumbnail langsung ke komputer.
-- **Async & Performance**: Dibangun secara asinkron dengan FastAPI untuk performa tinggi.
+- ✅ **URL Parser**: Mendukung berbagai format URL YouTube (Standard, Short, Shorts, YouTube Music, Mobile).
+- ✅ **Metadata Video**: Mengambil judul, penulis (uploader), dan durasi video.
+- ✅ **Thumbnail Multi-Resolusi**: Menyediakan URL thumbnail resolusi Default (120px), Medium (320px), High (480px), dan Max (1280px).
+- ✅ **Download API**: Langsung mengunduh thumbnail sebagai file `.jpg` dengan pilihan kualitas.
+- ✅ **Async Implementation**: Dibangun dengan pola asinkronus untuk performa tinggi.
 
 ## 🛠️ Tech Stack
 
-- Python 3.10+
-- FastAPI
-- yt-dlp
-- Uvicorn
-- Pydantic
-- Httpx
+- **Python 3.10+**
+- **FastAPI** (Web Framework)
+- **yt-dlp** (Youtube Metadata Scraper)
+- **Uvicorn** (Server)
+- **Pydantic** (Data Validation)
 
-## 📋 Persyaratan
+## 🚀 Cara Menjalankan
 
-Pastikan Anda memiliki Python 3.10 atau versi yang lebih baru terinstal di sistem Anda.
+### 1. Kloning Repositori
+```bash
+git clone <url-repo-anda>
+cd yt-thumbnail-api
+```
 
-## ⚙️ Instalasi
+### 2. Instal Dependensi
+```bash
+pip install -r requirements.txt
+```
 
-1. Clone repositori ini atau download source code-nya.
-2. Instal dependensi menggunakan pip:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## 🏃 Menjalankan API
-
-Jalankan server menggunakan Uvicorn:
+### 3. Jalankan Server
 ```bash
 uvicorn main:app --reload --port 8080
 ```
-*Catatan: Gunakan port `8080` jika port `8000` sudah digunakan oleh proses lain.*
+Server akan berjalan di `http://127.0.0.1:8080`.
 
 ## 📖 Dokumentasi API
 
-Setelah server berjalan, Anda dapat mengakses dokumentasi interaktif (Swagger UI) di:
-- **Dokumentasi**: [http://127.0.0.1:8080/docs](http://127.0.0.1:8080/docs)
+Akses Swagger UI untuk mencoba API secara interaktif:
+👉 `http://127.0.0.1:8080/docs`
 
-## 📡 Endpoint Utama
+### Endpoint Utama
 
-### 1. Dapatkan Metadata & URL Thumbnail
-**GET** `/api/v1/thumbnail`
+#### 1. Get Thumbnail Info
+`GET /api/v1/thumbnail`
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `url` | `string` | **Required**. URL video YouTube |
+**Query Param:**
+- `url`: URL video YouTube.
 
-**Contoh Request:**
-`http://127.0.0.1:8080/api/v1/thumbnail?url=https://www.youtube.com/watch?v=dQw4w9WgXcQ`
-
----
-
-### 2. Download Thumbnail Langsung
-**GET** `/api/v1/thumbnail/download`
-
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `url` | `string` | **Required**. URL video YouTube |
-| `quality` | `string` | **Optional**. Pilihan: `low`, `medium`, `high`, `max` (Default: `max`) |
-
-**Contoh Request:**
-`http://127.0.0.1:8080/api/v1/thumbnail/download?url=https://youtu.be/dQw4w9WgXcQ&quality=max`
-
-## 📂 Struktur Project
-
-```text
-yt-thumbnail-api/
-├── main.py              # Entry point FastAPI
-├── requirements.txt     # Daftar dependensi
-├── routers/             # Endpoint API
-├── services/            # Logika integrasi yt-dlp
-├── schemas/             # Validasi data Pydantic
-└── utils/               # Fungsi pembantu (URL Parser)
+**Contoh Response:**
+```json
+{
+  "status": "success",
+  "metadata": {
+    "title": "Video Title",
+    "author": "Channel Name",
+    "duration": 300
+  },
+  "thumbnails": {
+    "default": "...",
+    "medium": "...",
+    "high": "...",
+    "max_res": "..."
+  }
+}
 ```
 
-## 📝 Lisensi
-Bebas digunakan untuk keperluan belajar maupun komersial.
+#### 2. Download Thumbnail
+`GET /api/v1/thumbnail/download`
+
+**Query Param:**
+- `url`: URL video YouTube.
+- `quality`: (Optional) `low`, `medium`, `high`, atau `max` (Default: `max`).
+
+## 📁 Struktur Proyek
+
+```
+yt-thumbnail-api/
+├── main.py              # Entry point aplikasi
+├── requirements.txt     # Dependensi proyek
+├── routers/             # Endpoint API
+├── services/            # Logika interaksi yt-dlp
+├── schemas/             # Pydantic models (Validasi)
+└── utils/               # Helper (URL Parser)
+```
+
+## ⚖️ Lisensi
+
+Distribusi bebas untuk tujuan edukasi dan pengembangan.
